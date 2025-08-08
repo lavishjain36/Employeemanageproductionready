@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${employee.id == null ? 'Add Employee' : 'Edit Employee'} + ' - Employee Management System'">Employee Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+        }
+        .form-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-users me-2"></i>
+                Employee Management System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employees">Employees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Form Header -->
+    <section class="form-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="mb-2">
+                        <i class="fas fa-user-plus me-2" th:if="${employee.id == null}"></i>
+                        <i class="fas fa-user-edit me-2" th:if="${employee.id != null}"></i>
+                        <span th:text="${employee.id == null ? 'Add New Employee' : 'Edit Employee'}">Employee Form</span>
+                    </h2>
+                    <p class="mb-0">Fill in the employee information below</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="/employees" class="btn btn-light">
+                        <i class="fas fa-arrow-left me-2"></i>Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Content -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card form-card">
+                    <div class="card-body p-4">
+                        <!-- Error Message -->
+                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <span th:text="${error}">Error message</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- Employee Form -->
+                        <form th:action="${employee.id == null ? '/employees' : '/employees/' + employee.id}" 
+                              th:object="${employee}" method="post">
+                            
+                            <div class="row">
+                                <!-- First Name -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">
+                                        <i class="fas fa-user me-1"></i>First Name *
+                                    </label>
+                                    <input type="text" class="form-control" id="firstName" 
+                                           th:field="*{firstName}" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a first name.
+                                    </div>
+                                </div>
+
+                                <!-- Last Name -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">
+                                        <i class="fas fa-user me-1"></i>Last Name *
+                                    </label>
+                                    <input type="text" class="form-control" id="lastName" 
+                                           th:field="*{lastName}" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a last name.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Email -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope me-1"></i>Email *
+                                    </label>
+                                    <input type="email" class="form-control" id="email" 
+                                           th:field="*{email}" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid email address.
+                                    </div>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">
+                                        <i class="fas fa-phone me-1"></i>Phone
+                                    </label>
+                                    <input type="tel" class="form-control" id="phone" 
+                                           th:field="*{phone}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Department -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="department" class="form-label">
+                                        <i class="fas fa-building me-1"></i>Department
+                                    </label>
+                                    <select class="form-select" id="department" th:field="*{department}">
+                                        <option value="">Select Department</option>
+                                        <option value="IT">IT</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Operations">Operations</option>
+                                    </select>
+                                </div>
+
+                                <!-- Salary -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="salary" class="form-label">
+                                        <i class="fas fa-dollar-sign me-1"></i>Salary
+                                    </label>
+                                    <input type="number" class="form-control" id="salary" 
+                                           th:field="*{salary}" step="0.01" min="0">
+                                </div>
+                            </div>
+
+                            <!-- Hire Date -->
+                            <div class="mb-4">
+                                <label for="hireDate" class="form-label">
+                                    <i class="fas fa-calendar me-1"></i>Hire Date
+                                </label>
+                                <input type="date" class="form-control" id="hireDate" 
+                                       th:field="*{hireDate}">
+                                <div class="form-text">Leave empty to set current date</div>
+                            </div>
+
+                            <!-- Form Actions -->
+                            <div class="d-flex justify-content-between">
+                                <a href="/employees" class="btn btn-secondary">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>
+                                    <span th:text="${employee.id == null ? 'Add Employee' : 'Update Employee'}">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Employee Management System. Built with Spring Boot & Thymeleaf.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByTagName('form');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+</body>
+</html>

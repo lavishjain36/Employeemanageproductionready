@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied - Employee Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .error-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 60px 40px;
+        }
+        .error-icon {
+            font-size: 5rem;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+        .btn-back:hover {
+            background: linear-gradient(45deg, #5a6fd8, #6a4190);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="error-container">
+                    <div class="error-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h2 class="text-danger mb-3">Access Denied</h2>
+                    <p class="text-muted mb-4">
+                        Sorry, you don't have permission to access this page. 
+                        Please contact your administrator if you believe this is an error.
+                    </p>
+                    <div class="d-grid gap-2">
+                        <a href="/dashboard" class="btn btn-primary btn-back">
+                            <i class="fas fa-home me-2"></i>Go to Dashboard
+                        </a>
+                        <a href="/" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
